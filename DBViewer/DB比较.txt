@@ -1,0 +1,230 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Lib/Flow.txt
+Library           Screenshot
+Library           AutoItLibrary
+Library           OperatingSystem
+Library           mylib
+Library           ExcelLibrary
+Library           Collections
+
+*** Test Cases ***
+登录admin-chrome
+    用户登录    admin    g5
+    Page Should Not Contain Button    ${button_login}
+    log    用户登录成功
+
+设置期望结果（非首次请勿勾选）
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    ${locator}    Log Location
+    log    ${locator}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\expect
+    #将截图复制到期望结果文件夹
+    close browser
+
+校验DB
+    用户登录    admin    g5    chrome
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    log    111lalalla
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\result
+    #将截图复制到实际结果文件夹
+    ${result}    compare    ${dbname}
+    Run Keyword If    "${result}"=='true'    log    DB：${dbname}校验成功，与预期结果一致    ELSE    log    DB：${dbname}校验失败，请手动查看
+    ...    WARN
+    should be true    "${result}"=='true'    DB：${dbname}校验失败，请手动查看
+
+test
+    用户登录    admin    g5    chrome
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    select frame    ${frame_viewer}
+    ${sty}    Get Element Attribute    ${pagehigh}@style
+    log    ${sty}
+    Mouse Over    ${scroll}
+    Mouse Wheel    Down    5
+    Comment    Execute Javascript    window.scrollTo(0,document.body.scrollHeight)
+    unselect frame
+
+test2
+    用户登录    admin    g5    chrome
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    select frame    ${frame_viewer}
+    Comment    Mouse Over    ${scroll}
+    Mouse Wheel    Down    3
+    Comment    Execute Javascript    window.scrollTo(0,document.body.scrollHeight)
+    unselect frame
+
+test3
+    用户登录    admin    g5    chrome
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    select frame    ${frame_viewer}
+    ${sty}    Get Element Attribute    ${pagehigh}@style
+    log    ${sty}
+    ${he}    get hight    ${sty}
+    log    ${he}
+    ${whight}    ${height}    get window size
+    log    ${height}
+    ${loop}    evaluate    ${he}/(${height}-70)+1
+    log    ${loop}
+    ${time}    evaluate    (${height}-70)/100
+    log    ${time}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\result
+    #将截图复制到实际结果文件夹
+    ${result}    compare    ${dbname}
+    Run Keyword If    "${result}"=='true'    log    DB：${dbname}校验成功，与预期结果一致    ELSE    log    DB：${dbname}校验失败，请手动查看
+    ...    WARN
+    should be true    "${result}"=='true'    DB：${dbname}校验失败，请手动查看
+    : FOR    ${i}    IN RANGE    ${loop}
+    \    focus    ${scroll}
+    \    Mouse click    ${scroll}
+    \    Mouse Over    ${scroll}
+    \    Mouse Wheel    Down    ${time}
+    \    sleep    2s
+    \    Capture Page Screenshot    $
+    \    #截取当前页面DB
+    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\result
+    \    #将截图复制到实际结果文件夹
+    \    Comment    ${result}    compare    ${dbname}
+    \    ${result}    compare    ${dbname}${i}
+    \    Run Keyword If    "${result}"=='true'    log    DB：${dbname}{i}校验成功，与预期结果一致    ELSE    log
+    \    ...    DB：${dbname}校验失败，请手动查看    WARN
+    \    should be true    "${result}"=='true'    DB：${dbname}${i}校验失败，请手动查看
+
+运算
+    用户登录    admin    g5    chrome
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    select frame    ${frame_viewer}
+    ${sty}    Get Element Attribute    ${pagehigh}@style
+    log    ${sty}
+    ${he}    get hight    ${sty}
+    log    ${he}
+    ${whight}    ${height}    get window size
+    log    ${height}
+    ${loop}    evaluate    ${he}/(${height}-70)+1
+    log    ${loop}
+    ${time}    evaluate    (${height}-70)/100
+    log    ${time}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\result
+    #将截图复制到实际结果文件夹
+    : FOR    ${i}    IN RANGE    ${loop}
+    \    focus    ${scroll}
+    \    Mouse click    ${scroll}
+    \    Mouse Over    ${scroll}
+    \    Mouse Wheel    Down    ${time}
+    \    sleep    2s
+    \    Capture Page Screenshot    ${dbname}${i}.png
+    \    #截取当前页面DB
+    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\result
+    \    #将截图复制到实际结果文件夹
+    \    Comment    ${result}    compare    ${dbname}
+
+qiwang
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    select frame    ${frame_viewer}
+    ${sty}    Get Element Attribute    ${pagehigh}@style
+    log    ${sty}
+    ${he}    get hight    ${sty}
+    log    ${he}
+    ${whight}    ${height}    get window size
+    log    ${height}
+    ${loop}    evaluate    ${he}/(${height}-70)+1
+    log    ${loop}
+    ${time}    evaluate    (${height}-70)/100
+    log    ${time}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\expect
+    #将截图复制到实际结果文件夹
+    : FOR    ${i}    IN RANGE    ${loop}
+    \    focus    ${scroll}
+    \    Mouse click    ${scroll}
+    \    Mouse Over    ${scroll}
+    \    Mouse Wheel    Down    ${time}
+    \    sleep    2s
+    \    Capture Page Screenshot    ${dbname}${i}.png
+    \    #截取当前页面DB
+    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\expect
+    \    #将截图复制到实际结果文件夹
+    \    Comment    ${result}    compare    ${dbname}
+
+jiaoyan
+    用户登录    admin    g5    chrome
+    Page Should Not Contain Button    ${button_login}
+    log    用户登录成功
+    进入查看报告
+    搜索并进入DB    ${dbname}
+    select frame    ${frame_viewer}
+    ${sty}    Get Element Attribute    ${pagehigh}@style
+    log    ${sty}
+    ${he}    get hight    ${sty}
+    log    ${he}
+    ${whight}    ${height}    get window size
+    log    ${height}
+    ${loop}    evaluate    ${he}/(${height}-70)+1
+    log    ${loop}
+    ${time}    evaluate    (${height}-70)/100
+    log    ${time}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\result
+    #将截图复制到实际结果文件夹
+    ${result}    compare    ${dbname}
+    Run Keyword If    "${result}"=='true'    log    DB：${dbname}校验成功，与预期结果一致    ELSE    log    DB：${dbname}校验失败，请手动查看
+    ...    WARN
+    Comment    should be true    "${result}"=='true'    DB：${dbname}校验失败，请手动查看
+    : FOR    ${i}    IN RANGE    ${loop}
+    \    focus    ${scroll}
+    \    Mouse click    ${scroll}
+    \    Mouse Over    ${scroll}
+    \    Mouse Wheel    Down    ${time}
+    \    sleep    2s
+    \    Capture Page Screenshot    ${dbname}${i}.png
+    \    #截取当前页面DB
+    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\result
+    \    #将截图复制到实际结果文件夹
+    \    Comment    ${result}    compare    ${dbname}
+    \    ${result}    compare    ${dbname}${i}
+    \    Run Keyword If    "${result}"=='true'    log    DB：${dbname}第${i}部分校验成功，与预期结果一致    ELSE    log
+    \    ...    DB：${dbname}第${i}部分校验失败，请手动查看    WARN
+    \    Comment    should be true    "${result}"=='true'    DB：${dbname}第${i}部分校验失败，请手动查看
+
+111
+    open_Excel    F:\\python\\zzq.xls
+    @{read_columnA}    get_column_values    user    0    #0代表Excel的第一列，读完@{read_columnA}是一个list
+    @{read_columnB}    get_column_values    user    1
+    ${y}    set_Variable    1    #读取文件后，list示例[A2,u'hedi']
+    ${count_row}    get_row_count    user    #get_row_count/get_column_count    获取文本行/列数
+    Set_Suite_Variable    ${count_row}
+    #log    ${count_row}
+    @{a_list}    create_list
+    @{b_list}    create_list
+    : FOR    ${x}    IN RANGE    ${count_row}
+    \    ${a}    set_variable    ${read_columnA[${x}][${y}]}
+    \    ${b}    set_variable    ${read_columnB[${x}][${y}]}
+    \    Append to list    @{a_list}    ${a}    #Append_to_list需要Collections包支持
+    \    Append to list    @{b_list}    ${b}
+    Set_Suite_Variable    @{a_list}
+    Set_Suite_Variable    @{b_list}
+    log    @{a_list}
+    log    @{b_list}
+    log    ${a_list[1]}
+    log    ${b_list[0]}
+
+excel
+    open excel    F:\\python\\zzq.xls
+    @{username}    get_column_values    user    0
+    log    @{username}
