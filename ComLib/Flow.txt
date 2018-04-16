@@ -1,0 +1,21 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Element.txt
+Resource          Data.txt
+Resource          Action.txt
+
+*** Keywords ***
+Login
+    [Arguments]    ${username}=${admin.username}    ${password}=${admin.password}    ${autoFlag}=False
+    [Documentation]    username：传入登录账号用户名，默认admin
+    ...    password：传入登录账号密码，默认g5
+    ...    autoFlag：传入是否勾选自动登录，默认不勾选，传入True勾选，False不勾选
+    Open Browser    ${URL}    ${Browser}
+    Input Clear Text    ${input_username}    ${username}
+    Input Clear Text    ${input_password}    ${password}
+    Run Keyword if    ${autoFlag}==True    Click Element    ${btn_autologin}
+    Click Element    ${btn_login}
+
+text
+    log    diyihang
+    log    ${admin.username}

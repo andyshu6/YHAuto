@@ -1,0 +1,4 @@
+*** Variables ***
+&{admin}          username=admin    password=g5    # 系统管理员
+${URL}            http://192.168.1.146:8350/bi/    # 网站base URL
+${Browser}        ff    # firefox、ie、chrome

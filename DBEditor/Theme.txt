@@ -1,2 +1,7 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../ComLib/Flow.txt
+
 *** Test Cases ***
 homapage选择theme
+    Login

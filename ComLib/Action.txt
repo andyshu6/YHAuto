@@ -1,0 +1,8 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+Input Clear Text
+    [Arguments]    ${element}    ${message}    # element输入元素定位，message输入input的信息
+    Clear Element Text    ${element}
+    Input Text    ${element}    ${message}
