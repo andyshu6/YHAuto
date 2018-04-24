@@ -1,7 +1,19 @@
 *** Settings ***
+Test Setup        Close All Browsers
+Test Teardown     Close All Browsers
 Library           Selenium2Library
 Resource          ../ComLib/Flow.txt
+Resource          Lib/Flow.txt
+Resource          Lib/Data.txt
 
 *** Test Cases ***
 homapage选择theme
-    Login
+    GotoModules    editor
+    DelTheme    text
+
+新建自定义主题
+    GotoModules    editor
+    NewTheme    ${newThemeName}
+    Wait Until Element is Visible    //label[text()="${newThemeName}"]
+    [Teardown]    Run Keywords    DelTheme    ${newThemeName}
+    ...    AND    Close All Browsers
