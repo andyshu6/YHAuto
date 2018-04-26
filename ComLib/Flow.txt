@@ -11,11 +11,25 @@ Login
     ...    password：传入登录账号密码，默认g5
     ...    autoFlag：传入是否勾选自动登录，默认不勾选，传入True勾选，False不勾选
     Open Browser    ${URL}    ${Browser}
+    Maximize Browser Window
     Input Clear Text    ${input_username}    ${username}
     Input Clear Text    ${input_password}    ${password}
     Run Keyword if    ${autoFlag}==True    Click Element    ${btn_autologin}
     Click Element    ${btn_login}
 
 text
-    log    diyihang
-    log    ${admin.username}
+    [Arguments]    ${module}
+    log    ${ele_module.${module}}
+
+GotoModules
+    [Arguments]    ${module}=editor
+    [Documentation]    常见数据源：conn
+    ...    创建数据集：query
+    ...    自服务：ml
+    ...    编辑报告：editor
+    ...    查看报告：viewer
+    ...    调度任务：sche
+    ...    管理系统：system
+    Login
+    Wait Until Element Is Visible    ${ele_module.${module}}
+    Click Element    ${ele_module.${module}}
