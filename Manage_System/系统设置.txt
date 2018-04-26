@@ -1,0 +1,14 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Lib/flow.txt
+Resource          ../ComLib/Flow.txt
+
+*** Test Cases ***
+设置系统主题方案
+    login
+    Page Should Not Contain Button    ${btn_login}
+    log    用户登录成功
+    GotoSystemManege
+    sleep    3s
+    click element    ${test}
+    SetSystemTheme    ${btn_systemtheme_1}
