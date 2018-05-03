@@ -3,7 +3,7 @@ Library           Selenium2Library
 Resource          Element.txt
 Resource          Element.txt
 Resource          Data.txt
-Library           mylib
+Library           Cuslib
 Library           ExcelLibrary
 Library           Collections
 

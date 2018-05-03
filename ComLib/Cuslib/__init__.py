@@ -18,6 +18,6 @@
 
 from compare import *
 version='1.0'
-class mylib(compare):
+class Cuslib(compare):
 	ROBOT_LIBRARY_SCOPE = 'GLOBAL'
 
