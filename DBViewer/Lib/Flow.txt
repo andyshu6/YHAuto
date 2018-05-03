@@ -1,0 +1,27 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Action.txt
+Resource          Data.txt
+
+*** Keywords ***
+UserLogin
+    [Arguments]    ${usr}    ${pwd}    ${browser}=chrome
+    GotoLoginPage    ${browser}
+    log    使用"${username}"用户进行登录
+    Wait Until Keyword Succeeds    2min    5sec    ActionLogin    ${usr}    ${pwd}
+
+GotoDBviewer
+    click element    ${btn_dbviewer}
+    log    已进入查看报告页面
+    sleep    1s
+
+SearchIntoDB
+    [Arguments]    ${dbname}    #要搜索查看的db名称
+    [Documentation]    \#在查看报告页面搜索某DB名称并进入查看该DB
+    select frame    ${frame_viewer}
+    input text    ${input_search}    ${dbname}
+    sleep    3s
+    click element    ${item_viewer_firstresult}
+    sleep    3s
+    log    已进入DB:${dbname}
+    unselect frame
