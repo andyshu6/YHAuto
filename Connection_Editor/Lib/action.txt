@@ -1,0 +1,13 @@
+*** Settings ***
+Resource          data.txt
+Resource          element.txt
+Library           Selenium2Library
+
+*** Keywords ***
+InputConnectionInfo
+    [Arguments]    ${connect_url}    ${connect_username}    ${connect_password}
+    select frame    ${iframe_connection}
+    input text    ${input_connect_URL}    ${connect_url}
+    input text    ${input_connect_username}    ${connect_username}
+    input text    ${input_connect_password}    ${connect_password}
+    unselect frame

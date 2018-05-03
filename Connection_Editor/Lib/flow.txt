@@ -1,0 +1,34 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          action.txt
+Resource          ../../ComLib/Flow.txt
+
+*** Keywords ***
+GotoConnection
+    click element    ${btn_connection}
+    log    已进入添加数据源页面
+    sleep    1s
+
+AddConnection
+    [Arguments]    ${con name}    # 输入想新建的数据源类型
+    select frame    ${iframe_connection}
+    sleep    1s
+    click element    ${input_search_connection_father}
+    sleep    1s
+    input text    ${input_search_connectionn}    ${con name}
+    sleep    1s
+    click element    ${item_connection}
+    unselect frame
+    log    已进入新建${con name}页面
+
+SaveConnection
+    select frame    ${iframe_connection}
+    click element    ${btn_save}
+    Comment    Wait Until Page Contains    ${dialog_save}
+    sleep    1s
+    Comment    click element    ${dialog_save}
+    Comment    click element    ${input_save_name}
+    Comment    input text    ${input_save_name}    test1
+    click element    ${btn_save_confirm}
+    unselect frame
+    log    保存数据源成功
