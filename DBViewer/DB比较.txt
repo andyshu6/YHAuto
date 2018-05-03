@@ -4,7 +4,7 @@ Resource          Lib/Flow.txt
 Library           Screenshot
 Library           AutoItLibrary
 Library           OperatingSystem
-Library           Cuslib
+Library           CusLib
 Library           ExcelLibrary
 Library           Collections
 Resource          ../ComLib/Flow.txt
