@@ -1,0 +1,15 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          action.txt
+
+*** Keywords ***
+GotoSystemManege
+    click element    ${btn_system}
+    log    已进入系统管理页面
+    sleep    1s
+
+SetSystemTheme
+    [Arguments]    ${theme}
+    click element    ${theme}
+    sleep    1s
+    click element    ${btn_system_theme_confirm}
