@@ -2,6 +2,9 @@
 Library           Selenium2Library
 Resource          Action.txt
 Resource          Data.txt
+Library           Cuslib
+Library           AutoItLibrary
+Library           OperatingSystem
 
 *** Keywords ***
 UserLogin
@@ -25,3 +28,45 @@ SearchIntoDB
     sleep    3s
     log    已进入DB:${dbname}
     unselect frame
+
+SetExpect
+    [Arguments]    ${loop}    ${time}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\expect
+    #将截图复制到实际结果文件夹
+    :FOR    ${i}    IN RANGE    ${loop}
+    \    focus    ${scroll_viewerDB}
+    \    Mouse click    ${scroll_viewerDB}
+    \    Mouse Over    ${scroll_viewerDB}
+    \    Mouse Wheel    Down    ${time}
+    \    sleep    2s
+    \    Capture Page Screenshot    ${dbname}${i}.png
+    \    #截取当前页面DB
+    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\expect
+    \    #将截图复制到实际结果文件夹
+
+SetResult
+    [Arguments]    ${loop}    ${time}
+    Capture Page Screenshot    ${dbname}.png
+    #截取当前页面DB
+    copy file    ${logpath}${dbname}.png    F:\\screen\\result
+    #将截图复制到实际结果文件夹
+    ${result}    compare    ${dbname}
+    Run Keyword If    "${result}"=='true'    log    DB：${dbname}校验成功，与预期结果一致
+    ...    ELSE    log    DB：${dbname}校验失败，请手动查看    WARN
+    Comment    should be true    "${result}"=='true'    DB：${dbname}校验失败，请手动查看
+    :FOR    ${i}    IN RANGE    ${loop}
+    \    focus    ${scroll_viewerDB}
+    \    Mouse click    ${scroll_viewerDB}
+    \    Mouse Over    ${scroll_viewerDB}
+    \    Mouse Wheel    Down    ${time}
+    \    sleep    2s
+    \    Capture Page Screenshot    ${dbname}${i}.png
+    \    #截取当前页面DB
+    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\result
+    \    #将截图复制到实际结果文件夹
+    \    ${result}    compare    ${dbname}${i}
+    \    Run Keyword If    "${result}"=='true'    log    DB：${dbname}第${i}部分校验成功，与预期结果一致
+    \    ...    ELSE    log    DB：${dbname}第${i}部分校验失败，请手动查看    WARN
+    \    Comment    should be true    "${result}"=='true'    DB：${dbname}第${i}部分校验失败，请手动查看

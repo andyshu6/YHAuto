@@ -3,9 +3,9 @@ Library           Selenium2Library
 Resource          Element.txt
 Resource          Element.txt
 Resource          Data.txt
-Library           Cuslib
 Library           ExcelLibrary
 Library           Collections
+Library           Cuslib
 
 *** Keywords ***
 GotoLoginPage
