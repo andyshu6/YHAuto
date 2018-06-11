@@ -11,10 +11,8 @@ Resource          ../ComLib/Flow.txt
 
 *** Test Cases ***
 设置期望结果（非首次请勿勾选）
-    login
-    Page Should Not Contain Button    ${btn_login}
-    log    用户登录成功
-    GotoDBviewer
+    GotoModules    viewe
+    sleep    1s
     SearchIntoDB    ${dbname}
     select frame    ${frame_viewer}
     ${loop}    ${time}    GetScrollInfo
@@ -36,10 +34,8 @@ Resource          ../ComLib/Flow.txt
     unselect frame
 
 校验DB
-    login
-    Page Should Not Contain Button    ${btn_login}
-    log    用户登录成功
-    GotoDBviewer
+    [Tags]    P1
+    GotoModules    viewer
     SearchIntoDB    ${dbname}
     select frame    ${frame_viewer}
     ${loop}    ${time}    GetScrollInfo
