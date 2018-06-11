@@ -4,7 +4,7 @@ Resource          Lib/Flow.txt
 Library           Screenshot
 Library           AutoItLibrary
 Library           OperatingSystem
-Library           CusLib
+Library           Cuslib
 Library           ExcelLibrary
 Library           Collections
 Resource          ../ComLib/Flow.txt
@@ -16,22 +16,9 @@ Resource          ../ComLib/Flow.txt
     SearchIntoDB    ${dbname}
     select frame    ${frame_viewer}
     ${loop}    ${time}    GetScrollInfo
-    Capture Page Screenshot    ${dbname}.png
-    #截取当前页面DB
-    copy file    ${logpath}${dbname}.png    F:\\screen\\expect
-    #将截图复制到实际结果文件夹
-    : FOR    ${i}    IN RANGE    ${loop}
-    \    focus    ${scroll_viewerDB}
-    \    Mouse click    ${scroll_viewerDB}
-    \    Mouse Over    ${scroll_viewerDB}
-    \    Mouse Wheel    Down    ${time}
-    \    sleep    2s
-    \    Capture Page Screenshot    ${dbname}${i}.png
-    \    #截取当前页面DB
-    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\expect
-    \    #将截图复制到实际结果文件夹
-    \    Comment    ${result}    compare    ${dbname}
+    SetExpect    ${loop}    ${time}
     unselect frame
+    close browser
 
 校验DB
     [Tags]    P1
@@ -39,26 +26,11 @@ Resource          ../ComLib/Flow.txt
     SearchIntoDB    ${dbname}
     select frame    ${frame_viewer}
     ${loop}    ${time}    GetScrollInfo
-    Capture Page Screenshot    ${dbname}.png
-    #截取当前页面DB
-    copy file    ${logpath}${dbname}.png    F:\\screen\\result
-    #将截图复制到实际结果文件夹
-    ${result}    compare    ${dbname}
-    Run Keyword If    "${result}"=='true'    log    DB：${dbname}校验成功，与预期结果一致
-    ...    ELSE    log    DB：${dbname}校验失败，请手动查看    WARN
-    Comment    should be true    "${result}"=='true'    DB：${dbname}校验失败，请手动查看
-    : FOR    ${i}    IN RANGE    ${loop}
-    \    focus    ${scroll_viewerDB}
-    \    Mouse click    ${scroll_viewerDB}
-    \    Mouse Over    ${scroll_viewerDB}
-    \    Mouse Wheel    Down    ${time}
-    \    sleep    2s
-    \    Capture Page Screenshot    ${dbname}${i}.png
-    \    #截取当前页面DB
-    \    copy file    ${logpath}${dbname}${i}.png    F:\\screen\\result
-    \    #将截图复制到实际结果文件夹
-    \    Comment    ${result}    compare    ${dbname}
-    \    ${result}    compare    ${dbname}${i}
-    \    Run Keyword If    "${result}"=='true'    log    DB：${dbname}第${i}部分校验成功，与预期结果一致
-    \    ...    ELSE    log    DB：${dbname}第${i}部分校验失败，请手动查看    WARN
-    \    Comment    should be true    "${result}"=='true'    DB：${dbname}第${i}部分校验失败，请手动查看
+    SetResult    ${loop}    ${time}
+    close browser
+
+11
+    Open Browser    ${URL}    ${Browser}
+    Maximize Browser Window
+    ${ttt}    run keyword and return status    Element Should Be Visible    ${btn_login}
+    log    ${ttt}

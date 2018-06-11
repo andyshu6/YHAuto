@@ -17,7 +17,5 @@
 # -*- coding: UTF-8 -*-
 
 from compare import *
-version='1.0'
-class Cuslib(compare):
-	ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+
 
