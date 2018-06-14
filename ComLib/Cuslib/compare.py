@@ -10,12 +10,12 @@ import math
 import operator
 from functools import reduce
 def get_expectname(picname):
-	image1=Image.open('F:\\screen\\expect\\'+picname+'.png')
+	image1=Image.open('E:\\YHAuto\\screen\\expect\\'+picname+'.png')
 	#把图像对象转换为直方图数据，存在list h1、h2 中
 	h1=image1.histogram()
 	return h1
 def get_resultname(picname):
-	image2=Image.open('F:\\screen\\result\\'+picname+'.png')
+	image2=Image.open('E:\\YHAuto\\screen\\result\\'+picname+'.png')
 	h2=image2.histogram()
 	return h2
 def compare(picname):
@@ -27,8 +27,8 @@ def compare(picname):
 		return 'true'
 	else:
 		print(result)
-		imageA = cv2.imread('F:\\screen\\expect\\'+picname+'.png')
-		imageB = cv2.imread('F:\\screen\\result\\'+picname+'.png')
+		imageA = cv2.imread('E:\\YHAuto\\screen\\expect\\'+picname+'.png')
+		imageB = cv2.imread('E:\\YHAuto\\screen\\result\\'+picname+'.png')
 
 		grayA = cv2.cvtColor(imageA,cv2.COLOR_BGR2GRAY)
 		grayB = cv2.cvtColor(imageB,cv2.COLOR_BGR2GRAY)
