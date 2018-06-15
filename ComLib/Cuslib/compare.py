@@ -9,6 +9,12 @@ from PIL import Image
 import math
 import operator
 from functools import reduce
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+
 def get_expectname(picname):
 	image1=Image.open('E:\\YHAuto\\screen\\expect\\'+picname+'.png')
 	#把图像对象转换为直方图数据，存在list h1、h2 中
@@ -43,7 +49,7 @@ def compare(picname):
 			cv2.rectangle(imageA,(x,y),(x+w,y+h),(0,0,255),2)                                                                                                                                                                         
 			cv2.rectangle(imageB,(x,y),(x+w,y+h),(0,0,255),2)
 			cv2.imshow("Modified",imageB)
-		cv2.imwrite('F:\\screen\\dif\\'+picname+'.png',imageB)
+		cv2.imwrite('E:\\YHAuto\\screen\\dif\\'+picname+'.png',imageB)
 		cv2.destroyAllWindows()
 		cv2.waitKey(0)
 		cv2.destroyAllWindows()
@@ -64,6 +70,6 @@ def get_hight(style):
 	return c
 	#输入style返回网页高度
 if __name__ == '__main__':
-	picname='test31'
+	picname=u'表格渲染'
 	compare(picname)
 

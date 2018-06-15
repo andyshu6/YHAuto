@@ -1,6 +1,5 @@
 *** Settings ***
 Test Setup        Close All Browsers
-Test Teardown     Close All Browsers
 Library           Selenium2Library
 Resource          ../ComLib/Flow.txt
 Resource          Lib/Flow.txt
@@ -8,8 +7,7 @@ Resource          Lib/Data.txt
 
 *** Test Cases ***
 首页选择主题创建DB
-    GotoModules    editor
-    DelTheme    text
+    GotoModules    portal
 
 新建自定义主题
     [Documentation]    【Preconditon】
