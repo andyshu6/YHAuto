@@ -1,0 +1,95 @@
+*** Settings ***
+Library           ../TestLibrary/    ${running_case_para}
+Library           DateTime
+Library           Collections
+Resource          pub_param.txt
+
+*** Keywords ***
+登陆平台
+    login_mpup    ${login_user}    ${login_password}
+
+退出平台
+    logout_mpup
+
+获取短信认证验证码
+    [Arguments]    ${phone_number}
+    open_connection    ${running_case_para['master_ip']}    ${running_case_para['master_ip']}    timeout=10 minute
+    login    ${mpup_user}    ${mpup_pwd}
+    ${sms_code}    Execute Command    tail -n 50 /home/mpup/mpupdefault/logs/aasnode/aasportal/aasportalauth.log |grep ${phone_number} |grep sms.SmsSendService |grep 发送短信的内容为 |awk -F "," '{print $4}' |awk -F "[" '{print $2}' |awk -F "]" '{print $1}'
+    [Teardown]    Close Connection
+    [Return]    ${sms_code}
+
+1X认证
+    [Arguments]    ${user_name}    ${password}    ${ap_mac}    ${ssid}    ${nas_ip}    ${nas_id}
+    ...    ${user_mac}    ${user_ip}    ${other_sttr_param}=${EMPTY}    ${config_file}=ttls-pap.conf
+    [Documentation]    1X认证通用方法：
+    ...    调用eapol_test工具进行802.1X认证，命令说明：
+    ...    -c:配置文件名
+    ...    -a：认证服务器地址
+    ...    -p：端口号
+    ...    -s：预共享秘钥
+    ...    -M：终端MAC地址，必须为11:22:33:44:55:66这种格式
+    ...    -N：自定义radius属性，属性格式为：id:类型(类型可以为s:String, d：intger，x：octet string)：值，多个自定义属性时添加多个-N参数
+    ...    示例：
+    ...
+    ...    eapol_test -c ttls-pap.conf -a 10.10.9.215 -p 1812 -s admin -M 11:22:33:44:55:55 -N 30:s:11-22-33-44-55-66:ssid -N 4:d: -N 32:s:835
+    ...
+    ...    1、ap_mac:格式为11-22-33-44-55-66
+    ...    2、ssid：字符串ssid
+    ...    2、user_name:用户名
+    ...    3、password:密码
+    ...    5、aas_ip：服务器IP
+    ...    6、user_mac，必须为11:22:33:44:55:66这种格式
+    ...    7、${nas_id} \ 值填写ACname的值
+    ...    8、${nas_ip}:必须是将IP转化为整数
+    ...    9、${other_sttr_param} 其他自定义属性，按照-N 属性id:类型:值的形式传入，有多个其他自定义属性时，使用多个-N参数拼接成字符串,例如：添加nasPort属性:5:d:10 \ 其中5代表nasPort的属性id，d代表类型为integer，10为nasPort的值。
+    ...    10、${config_file}:配置文件的名称，默认为ttls_pap.conf，若认证有类型需要，需要修改本字段，对应的值分别为：ttls-pap.conf、peap-mschapv2.conf、peap-pap.conf、peap-GTC.conf
+    ...
+    ...    返回值：返回认证命令的整个字符串，用例中需要判断字符串中是否包含Access-Reject，Access-Accept
+    open_connection    ${running_case_para['client_ip']}    ${running_case_para['client_ip']}    timeout=10 minute
+    login    ${client_user}    ${client_pwd}
+    #替换配置文件中的用户名
+    execute_command    sed -i 's/identity=.*/identity="${user_name}"/g' ${config_file}    flag=false
+    #替换配置文件中的密码
+    execute_command    sed -i 's/password=.*/password="${password}"/g' ${config_file}    flag=false
+    #生成执行认证的命令
+    ${cmd}=    Set Variable    eapol_test -c ${config_file} -a ${running_case_para['aas_ip']} -p 1812 -s maipu -M ${user_mac} -N 30:s:${ap_mac}:${ssid} -N 4:d:${nas_ip} -N 32:s:${nas_id} -N 8:d:${user_ip} ${other_sttr_param}
+    log    ${cmd}
+    #返回认证结果，用例中通过判断是否包含Access-Reject，Access-Accept关键字来断言是否认证成功
+    ${test_status}    execute_command    ${cmd}    flag=false
+    Close Connection
+    [Return]    ${test_status}
+
+删除所有推送策略
+    @{push_poicy_list}    query_push_policy    query_flag=True
+    ${len}    evaluate    len(@{push_poicy_list})
+    : FOR    ${INDEX}    IN RANGE    0    ${len}
+    \    ${push_policy_name}    get from dictionary    @{push_poicy_list}[${INDEX}]    name
+    \    del_push_policy    ${push_policy_name}
+    \    sleep    1
+
+删除所有时长策略
+    [Arguments]    ${group_name}
+    #删除总行下的策略
+    ${default_policy_name}    set variable    '默认策略'
+    ${default_group_id}    get_portal_group_info_by_group_name    ${group_name}
+    @{time_poicy_list}    query_time_policy    query_flag=True    group_id=${default_group_id}    policy_name=
+    ${len}    evaluate    len(@{time_poicy_list})
+    : FOR    ${INDEX}    IN RANGE    0    ${len}
+    \    ${time_policy_name}    get from dictionary    @{time_poicy_list}[${INDEX}]    name
+    \    ${re}    evaluate    '${time_policy_name}'==${default_policy_name}
+    \    run keyword if    ${re}==False    del_time_policy    ${time_policy_name}
+    \    sleep    1
+    sleep    5
+
+获取当前时间戳
+    ${current_date} =    Get Current Date
+    ${date} =    Convert Date    ${current_date}    datetime
+    ${timestamp}=    Set Variable    ${date.year}${date.month}${date.day}_${date.hour}_${date.minute}_${date.second}
+    [Return]    ${timestamp}    #当前时间戳
+
+安装RF第三方库
+    install_rf_libs
+
+拷贝drivers到python安装目录
+    copy_drivers_to_local

@@ -1,0 +1,3 @@
+*** Settings ***
+Resource          ManageSystem_Element.txt
+Resource          ManageSystem_Data.txt

@@ -1,0 +1,11 @@
+*** Settings ***
+
+*** Variables ***
+${path_expect}    E:\\YHAuto\\screen\\expect    #期望结果截图路径
+${dbname}         tablecell
+${logpath}        E:\\YHAuto\\rflog\\    #日志输出目录
+
+*** Keywords ***
+111
+    get high
+    compare

@@ -1,0 +1,30 @@
+*** Settings ***
+Library           Selenium2Library
+Library           ../../../TestLibrary/    ${running_case_para}
+Resource          DBEditor_Data.txt
+Resource          DBEditor_Action.txt
+Resource          DBEditor_Element.txt
+
+*** Keywords ***
+SelectTheme
+    [Arguments]    ${SelectTheme}=森林绿
+    actClickMoreTheme
+    actSelectTheme    ${SelectTheme}
+
+NewTheme
+    [Arguments]    ${ThemeName}    ${Theme}=森林绿
+    [Documentation]    以传入的theme为模板新建一个自定义主题，默认为森林绿
+    SelectTheme    ${Theme}
+    Click Element    ${link_themeNew}
+    actEditThemeName    ${ThemeName}
+
+DelTheme
+    [Arguments]    ${ThemeName}=${newThemeName}
+    [Documentation]    funtion:删除传入的theme
+    ...
+    ...    date:2018/5/3
+    ...
+    ...    author:Cesar
+    ${status}    Run Keyword And Return Status    Page Should Not Contain Element    ${link_themeNew}    #判断是否在主题dialog页面
+    Run Keyword If    ${status}    Select Theme    ${ThemeName}
+    actDelTheme    ${ThemeName}

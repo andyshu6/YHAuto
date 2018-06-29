@@ -1,5 +1,0 @@
-*** Variables ***
-${btn_systemtheme_1}    //*[@id="HomeViewer"]/div[2]/div[8]/div/div/div/div[2]/div[1]/div/div[2]/div/div[2]/div/table[1]/tbody/tr[1]/td[1]/label/img    #第一种系统主题方案单选框
-${btn_system}     //*[@class="_audit-homeBarTab-system"]    #系统管理模块按钮
-${btn_system_theme_confirm}    //*[@class="apply-button yh-button yh-button-primary yh-button-default"]    #应用系统主题方案按钮
-${test}           //*[@class="yh-collapse-item yh-collapse-item-active widget-default"]

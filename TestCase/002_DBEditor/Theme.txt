@@ -1,0 +1,35 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Lib/DBEditor_Data.txt
+Resource          Lib/DBEditor_Element.txt
+Resource          Lib/DBEditor_Action.txt
+Resource          Lib/DBEditor_Flow.txt
+Resource          ../../TestLibrary/pub_Flow.txt
+
+*** Test Cases ***
+首页选择主题创建DB
+    GotoModules    portal
+
+新建自定义主题
+    [Documentation]    【Preconditon】
+    ...
+    ...    【Action】
+    ...    1、进入自定义主题
+    ...    2、新建名称为${newThemeName}的自定义主题
+    ...
+    ...    【Expect Result】
+    ...    2、新建成功，在主题页面出现${newThemeName}
+    ...
+    ...    Create date：2018/5/3
+    ...
+    ...    author：Cesar
+    [Tags]    Theme    P1
+    GotoModules    editor
+    NewTheme    ${newThemeName}
+    Wait Until Element is Visible    //label[text()="${newThemeName}"]
+    [Teardown]    Run Keywords    DelTheme    ${newThemeName}
+    ...    AND    Close All Browsers
+
+修改自定义主题
+
+删除自定义主题
