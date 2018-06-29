@@ -1,0 +1,41 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+Resource          DBEditor_Data.txt
+Resource          DBEditor_Element.txt
+
+*** Keywords ***
+actSelectThemeInHomepage
+    [Arguments]    ${Theme}=森林绿
+    Click Element    xpath=//label[contains(text(), '${Theme}')]
+
+actSelectTheme
+    [Arguments]    ${SelectTheme}=森林绿
+    Wait Until Element is Visible    ${link_themeNew}
+    Click Element    xpath=//div[@class='yh-tree-node-container']/label[contains(text(), '${SelectTheme}')]
+
+actClickMoreTheme
+    Wait Until Element is Visible    ${iframe_homepage}
+    select frame    ${iframe_homepage}
+    Wait Until Element is Visible    ${link_moreTheme}
+    Click Element    ${link_moreTheme}
+
+actEditThemeName
+    [Arguments]    ${ThemeName}
+    Wait Until Element is Visible    ${btn_theme_editName}
+    Sleep    2    #页面第一次进入会加载db，如果不sleep很容易在编辑文字的时候失焦
+    Click Element    ${btn_theme_editName}
+    Click Element    ${text_theme_editName}
+    Send    {BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}{BS}
+    Send    ${ThemeName}    1
+    Sleep    1
+    Send    {ENTER}
+    click Element    ${btn_theme_save}
+
+actDelTheme
+    [Arguments]    ${ThemeName}
+    Wait Until Element is Visible    ${link_themeNew}
+    Mouse Over    xpath=//label[text()="${ThemeName}"]
+    Click Element    xpath=//label[text()="${ThemeName}"]/../div/div/i[@class='icon-delete']
+    Wait Until Element is Visible    ${btn_themeDel_OK}
+    Click Element    ${btn_themeDel_OK}

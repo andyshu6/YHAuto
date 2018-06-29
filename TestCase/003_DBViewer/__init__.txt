@@ -1,0 +1,4 @@
+*** Settings ***
+Force Tags        DBViewer
+Library           Selenium2Library
+Library           AutoItLibrary

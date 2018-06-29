@@ -1,0 +1,18 @@
+*** Variables ***
+${link_moreTheme}    xpath=//span[@class='more-span']    # 更多主题按钮
+${iframe_homepage}    id=editorIframe    # 编辑报告首页右侧frame
+${icon_tree_more}    xpath=//i[@class='icon-tree-more']    # DBTree中的更多icon
+${btn_themeOK}    xpath=//span[contains(text(), '确定')]    # 主题dialog中的确定按钮
+${btn_themeCancel}    xpath=//span[contains(text(), '取消')]    # 主题dialog中的取消按钮
+${btn_themeClose}    xpath=//i[@class='icon-close-radius']    # 主题dialog中的关闭按钮
+${link_themeNew}    xpath=//span[contains(text(), '新建主题')]    # 主题dialog中的新建主题链接
+${icon_themeEdit}    xpath=//label[text()="text"]/../div/div/i[@class='icon-theme-edittext']    # text主题dialog中的编辑icon——
+${icon_themeDel}    xpath=//label[text()="text"]/../div/div/i[@class='icon-delete']    # 主题dialog中的删除icon
+${btn_themeDel_OK}    xpath=//span[contains(text(), '是')]    # 删除主题确认dialog中“是”按钮
+${btn_themeDel_Cancel}    xpath=//span[contains(text(), '否')]    # 删除主题确认dialog中“否”按钮
+${btn_themeDel_Close}    xpath=//i[@class='icon-close-radius']    # 删除主题确认dialog中关闭按钮
+${btn_theme_editName}    xpath=//div[@class='theme-name-container']/i[@class='icon-theme-edittext']    # 自定义主题修改主题名称icon
+${text_theme_editName}    xpath=//div[@class='theme-name-container']/input[@type='text']    # 自定义主题名称输入文本框
+${btn_theme_save}    xpath=//span[contains(text(), '保存')]    # 自定义主题保存按钮
+${btn_theme_saveas}    xpath=//span[contains(text(), '另保存')]    # 自定义主题另存为按钮
+${btn_theme_cancel}    xpath=//span[contains(text(), '取消')]    # 自定义主题取消按钮

@@ -1,2 +1,0 @@
-*** Variables ***
-&{DB}             url=192.168.1.90:1521:orcl    username=yhuser    password=yhuser    # 数据库信息

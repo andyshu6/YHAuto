@@ -1,8 +1,0 @@
-*** Variables ***
-${input_username}    id=admin    # 登录页面用户名文本框
-${input_password}    id=pass    # 登录页面密码文本框
-${btn_autologin}    id=autoLogin    # 登录页面自动登录按钮（实际非checkbox）
-${btn_login}      id=logBtn    # 登录页面登录按钮
-&{ele_module}     conn=xpath\=//span[@class='icon-connection']    query=xpath\=//span[@class='icon-query']    ml=xpath\=//span[@class='icon-ml']    editor=xpath\=//span[@class='icon-editor']    viewer=xpath\=//span[@class='icon-viewer']    sche=xpath\=//span[@class='icon-scheduler']    system=xpath\=//span[@class='icon-system']
-...               perference=xpath\=//div[@class='preference _audit-homeBarTab-preference']    portal=xpath\=//div[@class='portal _audit-homeBarTab-portal']    logout=xpath\=//div[@class='logout']    # 左侧导航栏中的各个模块
-${icon_user}      xpath=//span[@class='icon-user']    #左侧导航栏用户icon

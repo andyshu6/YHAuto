@@ -1,0 +1,14 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Variables ***
+${input_username}    id=admin    # 用户名输入框
+${input_password}    id=pass    # 密码输入框
+${button_login}    id=logBtn    #登录按钮
+${btn_dbviewer}    //*[@id="HomeViewer"]/div[1]/div[5]    #查看报告模块
+${ele_homepage}    //*[@id="HomeViewer"]/div[2]/div[1]/div    #首页元素
+${input_search}    //input[@type='text']    #搜索框，用于标志
+${item_viewer_firstresult}    //*[@id="root"]/div/div[1]/div[2]/div[2]/div/div/div[1]/div    #搜索得的第一个DB
+${frame_viewer}    id=viewerIframe    #查看报告页面的iframe子页面
+${scroll_viewerDB}    //*[@class="yh-scrollbar-v-bar"]    #DB右侧滚动条
+${page_viewerDB}    //*[@class="yh-scrollbar-content-container"]/div[1]

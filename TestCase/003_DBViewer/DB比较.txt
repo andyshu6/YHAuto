@@ -1,0 +1,40 @@
+*** Settings ***
+Library           Selenium2Library
+Library           Screenshot
+Library           AutoItLibrary
+Library           OperatingSystem
+Library           ExcelLibrary
+Library           Collections
+Library           ../../TestLibrary/    ${running_case_para}
+Resource          Lib/DBViewer_Element.txt
+Resource          Lib/DBViewer_Data.txt
+Resource          Lib/DBViewer_Action.txt
+Resource          Lib/DBViewer_Flow.txt
+Resource          ../../TestLibrary/pub_Flow.txt
+
+*** Test Cases ***
+设置期望结果（非首次请勿勾选）
+    GotoModules    viewer
+    sleep    1s
+    SearchIntoDB    ${dbname}
+    select frame    ${frame_viewer}
+    ${loop}    ${time}    GetScrollInfo
+    SetExpect    ${loop}    ${time}
+    unselect frame
+    close browser
+
+校验DB
+    [Tags]    P1
+    GotoModules    viewer
+    sleep    1
+    SearchIntoDB    ${dbname}
+    select frame    ${frame_viewer}
+    ${loop}    ${time}    GetScrollInfo
+    SetResult    ${loop}    ${time}
+    close browser
+
+11
+    Open Browser    ${URL}    ${Browser}
+    Maximize Browser Window
+    ${ttt}    run keyword and return status    Element Should Be Visible    ${btn_login}
+    log    ${ttt}

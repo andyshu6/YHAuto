@@ -1,0 +1,18 @@
+*** Settings ***
+Library           Selenium2Library
+Library           ../../../TestLibrary/    ${running_case_para}
+Resource          ManageSystem_Data.txt
+Resource          ManageSystem_Element.txt
+Resource          ManageSystem_Action.txt
+
+*** Keywords ***
+GotoSystemManege
+    click element    ${btn_system}
+    log    已进入系统管理页面
+    sleep    1s
+
+SetSystemTheme
+    [Arguments]    ${theme}
+    click element    ${theme}
+    sleep    1s
+    click element    ${btn_system_theme_confirm}

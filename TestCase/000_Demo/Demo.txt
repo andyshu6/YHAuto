@@ -1,0 +1,60 @@
+*** Settings ***
+Suite Teardown    Close Browser
+Force Tags        demo
+Library           ExtendedSelenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
+Library           ../../TestLibrary/    ${running_case_para}
+Resource          ../../TestLibrary/pub_KeyWords.txt
+Resource          ../../TestLibrary/pub_param.txt
+
+*** Variables ***
+${LOGIN URL}      http://localhost:8081
+${BROWSER}        Chrome
+
+*** Test Cases ***
+安装RF第三方库
+    [Tags]
+    安装RF第三方库
+    [Teardown]
+
+拷贝drivers到python安装目录
+    [Tags]
+    拷贝drivers到python安装目录
+    [Teardown]
+
+init
+    [Tags]    bug
+    dr_init
+    [Teardown]
+
+Title check
+    Open Browser To Login Page
+    #Input Username    demo
+    #Input Password    mode
+    #Submit Credentials
+    #Welcome Page Should Be Open
+
+URL check
+    Location Should Be    http://127.0.0.1:8080/bi/Viewer
+    [Teardown]
+
+*** Keywords ***
+Open Browser To Login Page
+    Open Browser    ${running_case_para['base_url']}    ${BROWSER}
+    ${timestamp}    获取当前时间戳
+    Capture Page Screenshot    ${running_case_para['screenshot_dir']}/${timestamp}.png
+    Set Screenshot Directory    ${running_case_para['screenshot_dir']}    persist=True
+    Title Should Be    首页_Yonghong
+
+Input Username
+    [Arguments]    ${username}
+    Input Text    username_field    ${username}
+
+Input Password
+    [Arguments]    ${password}
+    Input Text    password_field    ${password}
+
+Submit Credentials
+    Click Button    login_button
+
+Welcome Page Should Be Open
+    Title Should Be    Welcome Page

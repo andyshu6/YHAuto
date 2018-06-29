@@ -1,3 +1,0 @@
-*** Settings ***
-Library           Selenium2Library
-Resource          Lib/Flow.txt
