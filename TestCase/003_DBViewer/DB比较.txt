@@ -1,7 +1,6 @@
 *** Settings ***
 Library           Selenium2Library
 Library           Screenshot
-Library           AutoItLibrary
 Library           OperatingSystem
 Library           ExcelLibrary
 Library           Collections

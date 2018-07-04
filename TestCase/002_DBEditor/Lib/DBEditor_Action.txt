@@ -1,6 +1,5 @@
 *** Settings ***
 Library           Selenium2Library
-Library           AutoItLibrary
 Resource          DBEditor_Data.txt
 Resource          DBEditor_Element.txt
 

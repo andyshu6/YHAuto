@@ -1,7 +1,6 @@
 *** Settings ***
 Library           Selenium2Library
 Library           OperatingSystem
-Library           AutoItLibrary
 Library           ../../../TestLibrary/    ${running_case_para}
 Resource          DBViewer_Action.txt
 Resource          DBViewer_Data.txt
