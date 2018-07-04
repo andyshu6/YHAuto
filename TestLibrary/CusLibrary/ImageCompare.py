@@ -8,7 +8,7 @@ from functools import reduce
 import cv2
 import imutils
 from PIL import Image
-from TestLibrary.CusLibrary.CusBase import CusBase
+from CusBase import CusBase
 
 
 class ImageCompare(CusBase):

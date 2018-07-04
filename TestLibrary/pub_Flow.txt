@@ -1,8 +1,8 @@
 *** Settings ***
 Library           Selenium2Library
-Resource          Element.txt
-Resource          Data.txt
-Resource          Action.txt
+Resource          pub_Element.txt
+Resource          pub_Data.txt
+Resource          pub_Action.txt
 
 *** Keywords ***
 GotoModules

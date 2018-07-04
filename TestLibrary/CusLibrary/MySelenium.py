@@ -9,7 +9,7 @@ import os
 import sys
 import subprocess
 import shutil
-from TestLibrary.CusLibrary.CusBase import *
+from CusBase import CusBase
 
 
 class MySelenium(CusBase):
@@ -20,13 +20,11 @@ class MySelenium(CusBase):
     def __init__(self, running_param):
         super(MySelenium, self).__init__(running_param)
 
-    @add_logs_for_functions
     def dr_init(self):
         dr = webdriver.Chrome()
         time.sleep(1)
         dr.maximize_window()
 
-    @add_logs_for_functions
     def install_rf_libs(self):
         """
         安装RF第三方库
@@ -42,7 +40,6 @@ class MySelenium(CusBase):
             print line
         return True
 
-    @add_logs_for_functions
     def copy_drivers_to_local(self):
         """
         将webdriver驱动拷贝到python安装目录
@@ -78,4 +75,4 @@ if __name__ == '__main__':
     print test.running_param['password']
     # test.dr_init()
     # test.install_rf_libs()
-    test.copy_drivers_to_local()
+    # test.copy_drivers_to_local()

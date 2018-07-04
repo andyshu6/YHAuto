@@ -1,5 +1,9 @@
 *** Settings ***
 Library           Selenium2Library
+Library           ../TestLibrary/    ${running_case_para}
+Library           DateTime
+Library           Collections
+Resource          pub_Data.txt
 
 *** Keywords ***
 Input Clear Text
@@ -20,3 +24,15 @@ actLogin
     Input Clear Text    ${input_password}    ${password}
     Run Keyword if    ${autoFlag}==True    Click Element    ${btn_autologin}
     Click Element    ${btn_login}
+
+获取当前时间戳
+    ${current_date} =    Get Current Date
+    ${date} =    Convert Date    ${current_date}    datetime
+    ${timestamp}=    Set Variable    ${date.year}${date.month}${date.day}_${date.hour}_${date.minute}_${date.second}
+    [Return]    ${timestamp}    #当前时间戳
+
+安装RF第三方库
+    install_rf_libs
+
+拷贝drivers到python安装目录
+    copy_drivers_to_local

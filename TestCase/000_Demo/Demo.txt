@@ -1,30 +1,44 @@
 *** Settings ***
-Suite Teardown    Close Browser
+Test Teardown     Close All Browsers
 Force Tags        demo
-Library           ExtendedSelenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
+Library           Selenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
 Library           ../../TestLibrary/    ${running_case_para}
-Resource          ../../TestLibrary/pub_KeyWords.txt
-Resource          ../../TestLibrary/pub_param.txt
+Resource          ../../TestLibrary/pub_Data.txt
+Resource          ../../TestLibrary/pub_Action.txt
 
 *** Variables ***
-${LOGIN URL}      http://localhost:8081
-${BROWSER}        Chrome
 
 *** Test Cases ***
 安装RF第三方库
     [Tags]
     安装RF第三方库
-    [Teardown]
 
 拷贝drivers到python安装目录
     [Tags]
     拷贝drivers到python安装目录
-    [Teardown]
 
-init
-    [Tags]    bug
-    dr_init
-    [Teardown]
+Browser
+    [Tags]
+    Open Browser    ${running_case_para['base_url']}    ${running_case_para['Browser']}    alias=first
+    Maximize Browser Window
+    Set Selenium Speed    1s
+    ${timestamp}    获取当前时间戳
+    Capture Page Screenshot    ${running_case_para['screenshot_dir']}/${timestamp}.png
+    Set Screenshot Directory    ${running_case_para['screenshot_dir']}    persist=True
+    Title Should Be    首页_Yonghong
+    Open Browser    http://baidu.com    ff    alias=second
+    ${width}    ${height}=    Get Window Size
+    Should Be Equal As Integers    ${height}    744
+    Set Window Size    1024    728
+    Should Not Be Equal    ${width}    ${800}
+    Location Should Be    http://baidu.com/
+    Switch Browser    1    # index
+    Page Should Contain    永洪科技
+    Switch Browser    second    # alias
+    Go To    ${running_case_para['base_url']}
+    Go Back
+    ${second_window_title}=    Get Window Titles
+    log    ${second_window_title}
 
 Title check
     Open Browser To Login Page
@@ -35,7 +49,6 @@ Title check
 
 URL check
     Location Should Be    http://127.0.0.1:8080/bi/Viewer
-    [Teardown]
 
 *** Keywords ***
 Open Browser To Login Page
