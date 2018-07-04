@@ -1,0 +1,9 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          Lib/DBEditor_Data.txt
+Resource          Lib/DBEditor_Element.txt
+Resource          Lib/DBEditor_Action.txt
+Resource          Lib/DBEditor_Flow.txt
+Resource          ../../TestLibrary/pub_Flow.txt
+
+*** Test Cases ***

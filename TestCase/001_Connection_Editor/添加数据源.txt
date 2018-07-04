@@ -1,0 +1,17 @@
+*** Settings ***
+Resource          Lib/ConnectionEditor_Data.txt
+Resource          Lib/ConnectionEditor_Element.txt
+Resource          Lib/ConnectionEditor_Action.txt
+Resource          Lib/ConnectionEditor_Flow.txt
+Resource          ../../TestLibrary/pub_Flow.txt
+
+*** Test Cases ***
+添加ORACLE数据源
+    login
+    Page Should Not Contain Button    ${btn_login}
+    log    用户登录成功
+    GotoConnection
+    AddConnection    ORACLE
+    sleep    1s
+    InputConnectionInfo    ${DB.url}    ${DB.username}    ${DB.password}
+    SaveConnection

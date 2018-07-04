@@ -1,0 +1,4 @@
+*** Settings ***
+Force Tags        DBEditor
+Library           Selenium2Library
+Resource          Lib/Flow.txt

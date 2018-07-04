@@ -1,0 +1,38 @@
+*** Settings ***
+Library           Selenium2Library
+Library           ../TestLibrary/    ${running_case_para}
+Library           DateTime
+Library           Collections
+Resource          pub_Data.txt
+
+*** Keywords ***
+Input Clear Text
+    [Arguments]    ${element}    ${message}    # element输入元素定位，message输入input的信息
+    Clear Element Text    ${element}
+    Input Text    ${element}    ${message}
+
+Browser Init
+    Open Browser    ${URL}    ${Browser}
+    Maximize Browser Window
+
+actLogin
+    [Arguments]    ${username}=${admin.username}    ${password}=${admin.password}    ${autoFlag}=False
+    [Documentation]    username：传入登录账号用户名，默认admin
+    ...    password：传入登录账号密码，默认g5
+    ...    autoFlag：传入是否勾选自动登录，默认不勾选，传入True勾选，False不勾选
+    Input Clear Text    ${input_username}    ${username}
+    Input Clear Text    ${input_password}    ${password}
+    Run Keyword if    ${autoFlag}==True    Click Element    ${btn_autologin}
+    Click Element    ${btn_login}
+
+获取当前时间戳
+    ${current_date} =    Get Current Date
+    ${date} =    Convert Date    ${current_date}    datetime
+    ${timestamp}=    Set Variable    ${date.year}${date.month}${date.day}_${date.hour}_${date.minute}_${date.second}
+    [Return]    ${timestamp}    #当前时间戳
+
+安装RF第三方库
+    install_rf_libs
+
+拷贝drivers到python安装目录
+    copy_drivers_to_local

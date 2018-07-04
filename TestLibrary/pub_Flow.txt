@@ -1,0 +1,41 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          pub_Element.txt
+Resource          pub_Data.txt
+Resource          pub_Action.txt
+
+*** Keywords ***
+GotoModules
+    [Arguments]    ${module}=editor    ${username}=${admin.username}    ${password}=${admin.password}    ${autoFlag}=False
+    [Documentation]    常见数据源：conn
+    ...    创建数据集：query
+    ...    自服务：ml
+    ...    编辑报告：editor
+    ...    查看报告：viewer
+    ...    调度任务：sche
+    ...    管理系统：system
+    ...    个性化设置：perference
+    ...    制作门户：portal
+    ...    退出：logout
+    ...
+    ...    Create date：2018/5/3
+    ...
+    ...    author：Cesar
+    Browser Init
+    ${status}    Run Keyword And Return Status    Element Should Be Visible    ${btn_login}    #判断是否在登录页面
+    Run Keyword If    ${status}    actLogin    ${username}    ${password}    ${autoFlag}
+    Wait Until Element Is Visible    ${ele_module.editor}
+    Run Keyword If    "${module}"=="perference" or "${module}"=="portal" or "${module}"=="logout"    Mouse Over    ${icon_user}
+    Click Element    ${ele_module.${module}}
+
+Login
+    [Arguments]    ${username}=${admin.username}    ${password}=${admin.password}    ${autoFlag}=False
+    [Documentation]    username：传入登录账号用户名，默认admin
+    ...    password：传入登录账号密码，默认g5
+    ...    autoFlag：传入是否勾选自动登录，默认不勾选，传入True勾选，False不勾选
+    ...
+    ...    Create date：2018/5/3
+    ...
+    ...    author：Cesar
+    Browser Init
+    actLogin    ${username}    ${password}    ${autoFlag}

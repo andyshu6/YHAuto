@@ -1,0 +1,6 @@
+*** Variables ***
+&{admin}          username=admin    password=g5    # 系统管理员
+${URL}            http://192.168.1.146:8350/bi/Viewer    # 网站base URL
+${Browser}        chrome    # firefox、ie、chrome
+${user}           ${running_case_para['user']}
+${password}       ${running_case_para['password']}

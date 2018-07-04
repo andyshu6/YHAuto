@@ -1,0 +1,18 @@
+*** Settings ***
+Default Tags
+Library           Selenium2Library
+Resource          Lib/ManageSystem_Data.txt
+Resource          Lib/ManageSystem_Element.txt
+Resource          Lib/ManageSystem_Action.txt
+Resource          Lib/ManageSystem_Flow.txt
+Resource          ../../TestLibrary/pub_Flow.txt
+
+*** Test Cases ***
+设置系统主题方案
+    login
+    Page Should Not Contain Button    ${btn_login}
+    log    用户登录成功
+    GotoSystemManege
+    sleep    3s
+    click element    ${test}
+    SetSystemTheme    ${btn_systemtheme_1}

@@ -1,0 +1,74 @@
+*** Settings ***
+Suite Setup       Open Browser To Login Page
+Suite Teardown    Close Browser
+Test Setup        Go To Login Page
+Force Tags        demo
+Library           Selenium2Library
+Library           ../../TestLibrary/    ${running_case_para}
+Resource          ../../TestLibrary/pub_Element.txt
+
+*** Variables ***
+${SERVER}         ${running_case_para['Server']}
+${BROWSER}        ${running_case_para['Browser']}
+${DELAY}          ${running_case_para['Delay']}
+${VALID USER}     ${running_case_para['Valid_user']}
+${VALID PASSWORD}    ${running_case_para['Valid_password']}
+${LOGIN URL}      ${running_case_para['HTTP_TYPE']}${running_case_para['Server']}${running_case_para['Login_url']}
+${WELCOME URL}    ${running_case_para['HTTP_TYPE']}${running_case_para['Server']}${running_case_para['Welcome_url']}
+${ERROR URL}      ${running_case_para['HTTP_TYPE']}${running_case_para['Server']}${running_case_para['Error_url']}
+
+*** Test Cases ***
+Invalid Username
+    Login With Invalid Credentials Should Fail    invalid    ${VALID PASSWORD}
+
+Invalid Password
+    Login With Invalid Credentials Should Fail    ${VALID USER}    invalid
+
+Login Success
+    Login Success    ${VALID USER}    ${VALID PASSWORD}
+
+*** Keywords ***
+Login With Invalid Credentials Should Fail
+    [Arguments]    ${username}    ${password}
+    Input Username    ${username}
+    Input Password    ${password}
+    Submit Credentials
+    Login Should Have Failed
+
+Login Should Have Failed
+    Location Should Be    ${LOGIN URL}
+
+Login Success
+    [Arguments]    ${username}    ${password}
+    Input Username    ${username}
+    Input Password    ${password}
+    Submit Credentials
+    Welcome Page Should Be Open
+
+Open Browser To Login Page
+    Open Browser    ${LOGIN URL}    ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Speed    ${DELAY}
+    Login Page Should Be Open
+
+Login Page Should Be Open
+    Title Should Be    首页_Yonghong
+
+Go To Login Page
+    Go To    ${LOGIN URL}
+    Login Page Should Be Open
+
+Input Username
+    [Arguments]    ${username}
+    Input Text    ${input_username}    ${username}
+
+Input Password
+    [Arguments]    ${password}
+    Input Text    ${input_password}    ${password}
+
+Submit Credentials
+    Click Button    ${btn_login}
+
+Welcome Page Should Be Open
+    Location Should Be    ${WELCOME URL}
+    Title Should Be    首页_Yonghong
