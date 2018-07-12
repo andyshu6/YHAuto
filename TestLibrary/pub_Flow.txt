@@ -1,11 +1,11 @@
 *** Settings ***
-Library           Selenium2Library
+Library           Selenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
 Resource          pub_Element.txt
 Resource          pub_Data.txt
 Resource          pub_Action.txt
 
 *** Keywords ***
-GotoModules
+GotoModule
     [Arguments]    ${module}=editor    ${username}=${admin.username}    ${password}=${admin.password}    ${autoFlag}=False
     [Documentation]    常见数据源：conn
     ...    创建数据集：query
@@ -25,7 +25,7 @@ GotoModules
     ${status}    Run Keyword And Return Status    Element Should Be Visible    ${btn_login}    #判断是否在登录页面
     Run Keyword If    ${status}    actLogin    ${username}    ${password}    ${autoFlag}
     Wait Until Element Is Visible    ${ele_module.editor}
-    Run Keyword If    "${module}"=="perference" or "${module}"=="portal" or "${module}"=="logout"    Mouse Over    ${icon_user}
+    Run Keyword If    "${module}"=="perference" or "${module}"=="portal" or "${module}"=="logout"    Mouse Over    ${ele_module.more}
     Click Element    ${ele_module.${module}}
 
 Login
@@ -39,3 +39,14 @@ Login
     ...    author：Cesar
     Browser Init
     actLogin    ${username}    ${password}    ${autoFlag}
+
+SuiteSetup
+    [Arguments]    ${DB}=${running_param['DB']}    # running_param中的DB
+    Stop Server
+    Copy Db To Bi Home    ${DB}
+    Start Server
+
+SuiteTearDown
+    Kill Driver
+    Stop Server
+    Revert Bi Home

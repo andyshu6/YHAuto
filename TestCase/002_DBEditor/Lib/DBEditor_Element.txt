@@ -16,3 +16,20 @@ ${text_theme_editName}    xpath=//div[@class='theme-name-container']/input[@type
 ${btn_theme_save}    xpath=//span[contains(text(), '保存')]    # 自定义主题保存按钮
 ${btn_theme_saveas}    xpath=//span[contains(text(), '另保存')]    # 自定义主题另存为按钮
 ${btn_theme_cancel}    xpath=//span[contains(text(), '取消')]    # 自定义主题取消按钮
+${dialog_auto_recover}    css=#_container_ .dialog    # 自动恢复dialog
+&{paneType}       bar=css\=.icon-mtype-bar    stack_bar=css\=.icon-mtype-stack-bar    3d=css\=.icon-mtype-bar-3d    stack_bar_3d=css\=.icon-mtype-stack-bar-3d    line=css\=.icon-mtype-line    stack_line=css\=.icon-mtype-stack-line    area=css\=.icon-mtype-area
+...               stack_area=css\=.icon-mtype-stack-area    pie=css\=.icon-mtype-pie    pie_3d=css\=.icon-mtype-pie-3d    donut=css\=.icon-mtype-donut    boxplot_area=css\=.icon-mtype-boxplot-area    point=css\=.icon-mtype-point    stack_point=css\=.icon-mtype-stack-point
+...               bubble=css\=.icon-mtype-bubble    wordcloud=css\=.icon-mtype-wordcloud    radar=css\=.icon-mtype-radar    filled_radar=css\=.icon-mtype-filled-radar    waterfall=css\=.icon-mtype-waterfall    pareto=css\=.icon-mtype-pareto    graph=css\=.icon-map-graph
+...               gis_map=css\=.icon-mtype-gis-map    org=css\=.icon-mtype-org    treemapping=css\=.icon-mtype-treemapping    measurecard=css\=.icon-mtype-measurecard    heat=css\=.icon-mtype-heat    auto=css\=.icon-mtype-auto    table=css\=.icon-componentstyle-table
+...               pivot=css\=.icon-componentstyle-pivot    freestyle=css\=.icon-componentstyle-freestyle    text=css\=.icon-componentstyle-text    filterlist=css\=.icon-componentstyle-filterlist    filtertree=css\=.icon-componentstyle-filtertree    range=css\=.icon-componentstyle-range    calendar=css\=.icon-componentstyle-calendar
+...               listbox=css\=.icon-componentstyle-listbox    combobox=css\=.icon-componentstyle-combobox    textinput=css\=.icon-componentstyle-textinput    form=css\=.icon-componentstyle-form    tab=css\=.icon-componentstyle-tab    image=css\=.icon-componentstyle-image    button=css\=.icon-componentstyle-button
+...               webpage=css\=.icon-componentstyle-webpage    gauge=css\=.icon-componentstyle-gauge    # 右侧paneTye，共44种
+${paneTypeList}    css=.elemitem    # 通过css定位paneTye，返回44+1，最后一个无效
+${contentContainer}    //div[starts-with(@id,'未命名')]    # 绘图区
+${btn_save}       //i[@class='icon-save']    # DB保存按钮
+${search_in_save}    //div[@class='dialog-body']//input[@class='input-search yh-text-input']    # 保存Dialog中的搜索框
+${input_DB_name}    //input[@class='yh-text-input']    # 保存Dialog中的DB名称输入框
+${editor_container}    //div[@class='hint-text']    # 汇总列
+${bindTreeScrollBar}    //div[@class='fill']/div[starts-with(@class,'yh-container')]//div[@class='yh-scrollbar-v-bar']    # 绑定滚动条
+${dbScrollBar}    //div[@class='view-pane-scrollbar yh-scrollbar']//div[@class='yh-scrollbar-v-bar']    # db滚动条
+${rightPaneScrollBar}    //div[@class='props-pane-pane flex-auto']//div[@class='yh-scrollbar-v-bar']    # 右侧pane滚动条

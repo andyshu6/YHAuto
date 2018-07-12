@@ -1,0 +1,93 @@
+*** Settings ***
+Suite Setup       SuiteSetup    ${Text_DB}
+Suite Teardown    SuiteTearDown
+Test Teardown     Close All Browsers
+Force Tags        Text
+Library           Selenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
+Resource          Lib/DBEditor_Data.txt
+Resource          Lib/DBEditor_Element.txt
+Resource          Lib/DBEditor_Action.txt
+Resource          Lib/DBEditor_Flow.txt
+Resource          ../../TestLibrary/pub_Action.txt
+Resource          ../../TestLibrary/pub_Flow.txt
+
+*** Test Cases ***
+001_Text_paneType_check
+    [Documentation]    前置条件：
+    ...    停止web服务
+    ...    将DBPainter数据覆盖bihome下数据
+    ...    开启服务
+    ...
+    ...    操作步骤：
+    ...    1. 启动浏览器打开登录页面URL后最大化浏览器
+    ...    2. 使用admin账户(admin/g5)登录系统
+    ...    3. 点击制作报告icon后进入报告主题选择页面，选择‘海洋蓝’主题
+    ...    4. 统计组件个数
+    ...
+    ...    预期结果：
+    ...    4. 组件个数应为44
+    [Tags]
+    GotoModule    editor
+    Cancel_auto_Recover_If_Exists
+    actSelectThemeInHomepage    海洋蓝
+    select frame    ${iframe_homepage}
+    Page Should Contain Element    ${paneType.bar}
+    Page Should Contain Element    ${paneType.gauge}
+    ${paneTypeList}=    getPaneTyeList
+    ${count}    get Length    ${paneTypeList}
+    ${count_exp}    evaluate    ${paneTypeCount}+1
+    should be equal as integers    ${count}    ${count_exp}
+    unselect frame
+
+002_Text_add_flow
+    [Documentation]    前置条件：
+    ...    停止web服务
+    ...    将DBPainter数据覆盖bihome下数据
+    ...    开启服务
+    ...
+    ...    操作步骤：
+    ...    1. 启动浏览器打开登录页面URL后最大化浏览器
+    ...    2. 使用admin账户(admin/g5)登录系统
+    ...    3. 点击制作报告icon后进入报告主题选择页面，选择‘海洋蓝’主题
+    ...    4. 选择Text组件，拖动到编辑区
+    ...    5. 数据集选择1
+    ...    6.1 汇总数据选择STATE_计数
+    ...    6.2 汇总数据选择MARKETING_计数
+    ...    7. 点击‘保存’按钮
+    ...    8. 在搜索框内输入‘Scalar’
+    ...    9. 选择‘Scalar&Image’文件夹下的Text
+    ...    10. 文件名称输入‘Text_01’后点击‘确定’按钮
+    ...
+    ...    预期结果：
+    ...    6.1 文本内容显示为4248
+    ...    6.1 文本内容显示为132474
+    [Tags]
+    GotoModule    editor
+    Cancel_auto_Recover_If_Exists
+    actSelectThemeInHomepage    海洋蓝
+    select frame    ${iframe_homepage}
+    Drag And Drop    ${paneType.text}    ${contentContainer}
+    Double Click Element    tag=canvas
+    Input Text    //textarea[@rows='4']    <p>Text to be send in</p>
+    ${cloumn}=    select_DB_Cloumn    STATE
+    Drag And Drop    ${cloumn}    ${editor_container}
+    sleep    2
+    ${sum}    Get Element Attribute    //textarea[@rows='4']@text
+    should be equal as integers    ${sum}    4248
+    Mouse Over    ${cloumn}
+    sleep    2
+    #Execute Javascript    "window.scrollTo(0,document.body.scrollHeight)"    # js="var q=document.getElementsByClassName("yh-scrollbar-v-bar").scrollTop=158"
+    #Execute Javascript    "${cloumn}.scrollIntoView();"
+    Drag And Drop By Offset    ${bindTreeScrollBar}    0    500
+    sleep    1
+    ${cloumn}=    select_DB_Cloumn    MARKETING
+    Drag And Drop    ${cloumn}    ${editor_container}
+    sleep    1
+    ${sum}    Get Element Attribute    //textarea[@rows='4']@text
+    should be equal as integers    ${sum}    132474
+    Click Element    ${btn_save}
+    Input Text    ${search_in_save}    Scalar&Image
+    select_folder_in_save    Scalar&Image
+    input_DB_name_in_save    Text_01
+    Click Element    ${btn_themeOK}
+    unselect frame

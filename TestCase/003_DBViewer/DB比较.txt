@@ -13,7 +13,7 @@ Resource          ../../TestLibrary/pub_Flow.txt
 
 *** Test Cases ***
 设置期望结果（非首次请勿勾选）
-    GotoModules    viewer
+    GotoModule    viewer
     sleep    1s
     SearchIntoDB    ${dbname}
     select frame    ${frame_viewer}
@@ -24,7 +24,7 @@ Resource          ../../TestLibrary/pub_Flow.txt
 
 校验DB
     [Tags]    P1
-    GotoModules    viewer
+    GotoModule    viewer
     sleep    1
     SearchIntoDB    ${dbname}
     select frame    ${frame_viewer}

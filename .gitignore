@@ -5,3 +5,6 @@
 *.log
 # pycharm
 .idea
+#testData
+TestData/DB/
+TestData/Screen/Result/

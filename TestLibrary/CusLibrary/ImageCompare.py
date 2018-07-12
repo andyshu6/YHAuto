@@ -85,9 +85,3 @@ class ImageCompare(CusBase):
         b = a[3].split('p')
         c = b[0]
         return c
-
-
-if __name__ == '__main__':
-    i = ImageCompare()
-    picname = u'表格渲染'
-    i.compare(picname)

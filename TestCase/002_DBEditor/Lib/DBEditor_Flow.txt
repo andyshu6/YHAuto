@@ -1,9 +1,11 @@
 *** Settings ***
-Library           Selenium2Library
+Library           Selenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
 Library           ../../../TestLibrary/    ${running_case_para}
 Resource          DBEditor_Data.txt
 Resource          DBEditor_Action.txt
 Resource          DBEditor_Element.txt
+Resource          ../../../TestLibrary/pub_Action.txt
+Resource          ../../../TestLibrary/pub_Flow.txt
 
 *** Keywords ***
 SelectTheme

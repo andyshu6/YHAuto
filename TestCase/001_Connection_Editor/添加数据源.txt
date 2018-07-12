@@ -7,7 +7,7 @@ Resource          ../../TestLibrary/pub_Flow.txt
 
 *** Test Cases ***
 添加ORACLE数据源
-    login
+    actLogin
     Page Should Not Contain Button    ${btn_login}
     log    用户登录成功
     GotoConnection

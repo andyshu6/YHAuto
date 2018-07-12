@@ -25,15 +25,26 @@ class TestLibrary(CusLibrary):
 
 
 if __name__ == '__main__':
+    base_path = os.path.dirname(__file__)
     running_param = {
-        'HTTP_TYPE': 'http://',
-        'IP': '192.168.0.146',
-        'PORT': '8083',
-        'user': 'admin',
-        'password': 'g5'
+        'DB': ['DBPainter', 'Chart'],
+        'BI_HOME': 'D:\Yonghong_Z-Suite_8.0.1\Yonghong\\bihome',
+        'BASE_URL': 'http://127.0.0.1:8081/bi/Viewer',
+        'BROWSER': 'Chrome',
+        'DELAY': 1,
+        'screenshot_dir': base_path + '/TestData/Screen/Result',
+        'expect_picture_dir': base_path + '/TestData/Screen/Expect',
+        'result_picture_dir': base_path + '/TestData/Screen/Result',
+        'diff_picture_dir': base_path + '/TestData/Screen/Diff'
     }
 
     test = TestLibrary(running_param)
-    print test.running_param['PORT']
-    print test.base_url
-    test.dr_init()
+    # print test.running_param['DB']
+    # print test.running_param['BASE_URL']
+    # print test.running_param['screenshot_dir']
+    print test.copy_db_to_bi_home('DBPainter')
+    # print test.revert_bi_home()
+    # print test._check_server_status()
+    # print test.start_server()
+    # print test.stop_server()
+    # print test.kill_driver()

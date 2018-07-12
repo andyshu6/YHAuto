@@ -9,7 +9,7 @@ Resource          ../../TestLibrary/pub_Flow.txt
 
 *** Test Cases ***
 设置系统主题方案
-    login
+    actLogin
     Page Should Not Contain Button    ${btn_login}
     log    用户登录成功
     GotoSystemManege
