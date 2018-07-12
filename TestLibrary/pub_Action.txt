@@ -1,5 +1,5 @@
 *** Settings ***
-Library           Selenium2Library
+Library           Selenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
 Library           ../TestLibrary/    ${running_case_para}
 Library           DateTime
 Library           Collections
@@ -12,8 +12,12 @@ Input Clear Text
     Input Text    ${element}    ${message}
 
 Browser Init
-    Open Browser    ${URL}    ${Browser}
+    Open Browser    ${login_url}    ${running_case_para['BROWSER']}
     Maximize Browser Window
+    Set Selenium Speed    ${running_case_para['DELAY']}
+    Set Screenshot Directory    ${running_case_para['screenshot_dir']}    persist=True
+    ${timestamp}    获取当前时间戳
+    #Capture Page Screenshot    ${timestamp}.png
 
 actLogin
     [Arguments]    ${username}=${admin.username}    ${password}=${admin.password}    ${autoFlag}=False
@@ -36,3 +40,16 @@ actLogin
 
 拷贝drivers到python安装目录
     copy_drivers_to_local
+
+还原bihome
+    revert_bi_home
+
+初始化bihome
+    [Arguments]    ${DB}    # TestData目录下的一个DB目录
+    copy_db_to_bi_home    ${DB}
+
+开启Web
+    Start Server
+
+停止Web
+    Stop Server

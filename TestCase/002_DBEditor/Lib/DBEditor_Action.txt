@@ -1,12 +1,15 @@
 *** Settings ***
-Library           Selenium2Library
+Library           Selenium2Library    timeout=15    implicit_wait=10    run_on_failure=Capture Page Screenshot
 Resource          DBEditor_Data.txt
 Resource          DBEditor_Element.txt
 
 *** Keywords ***
 actSelectThemeInHomepage
     [Arguments]    ${Theme}=森林绿
-    Click Element    xpath=//label[contains(text(), '${Theme}')]
+    Wait Until Element is Visible    ${iframe_homepage}
+    select frame    ${iframe_homepage}
+    Click Element    xpath=//label[@class='yh-label'][contains(text(), '${Theme}')]
+    unselect frame
 
 actSelectTheme
     [Arguments]    ${SelectTheme}=森林绿
@@ -38,3 +41,30 @@ actDelTheme
     Click Element    xpath=//label[text()="${ThemeName}"]/../div/div/i[@class='icon-delete']
     Wait Until Element is Visible    ${btn_themeDel_OK}
     Click Element    ${btn_themeDel_OK}
+
+Cancel_auto_Recover_If_Exists
+    Wait Until Element is Visible    ${iframe_homepage}
+    select frame    ${iframe_homepage}
+    ${ele_exist}=    Run Keyword And Return Status    Page Should Contain Element    ${btn_themeCancel}
+    Run Keyword If    "${ele_exist}"== "True"    click element    ${btn_themeCancel}
+    unselect frame
+
+getPaneTyeList
+    ${paneTypeList}=    get webelements    ${paneTypeList}
+    [Return]    ${paneTypeList}
+
+select_DB_Cloumn
+    [Arguments]    ${cloumn_name}=STATE    # 数据列，不带' '号
+    [Documentation]    选择DB数据源中的一列
+    ${cloumn}    get webelement    //label[@class='yh-label'][contains(text(),'${cloumn_name}')]
+    [Return]    ${cloumn}    # 返回数据列
+
+select_folder_in_save
+    [Arguments]    ${folder_name}    # 保存DB的文件夹名称，不带' '号
+    [Documentation]    选择DB数据源中的一列
+    ${folder}    get webelement    //div[@class='dialog-body']//label[@class='yh-label'][contains(text(),'${folder_name}')]
+    Click Element    ${folder}
+
+input_DB_name_in_save
+    [Arguments]    ${DB_name}=Text_01    # 保存的DB名称
+    Input Text    ${input_DB_name}    ${DB_name}

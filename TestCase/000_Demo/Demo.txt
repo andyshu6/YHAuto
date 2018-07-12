@@ -50,6 +50,26 @@ Title check
 URL check
     Location Should Be    http://127.0.0.1:8080/bi/Viewer
 
+local
+    [Tags]    debug
+    Open Browser    file:///E:/20180703_RFS%E5%88%86%E4%BA%AB/xpath.html    ${Browser}    alias=first
+    Maximize Browser Window
+    @{eles}    get webelements    xpath=//input
+    focus    @{eles}[0]
+    Input text    @{eles}[0]    ele0
+    sleep    3
+    Input text    @{eles}[2]    ele1
+    sleep    3
+
+copy_db_to_bi_home
+    [Tags]
+    log    ${running_case_para['DB']}
+    初始化bihome    ${running_case_para['DB'][0]}
+
+revert_bi_home
+    [Tags]
+    还原bihome
+
 *** Keywords ***
 Open Browser To Login Page
     Open Browser    ${running_case_para['base_url']}    ${BROWSER}

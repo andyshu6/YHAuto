@@ -1,2 +1,4 @@
 *** Variables ***
 ${newThemeName}    大鹏展翅
+${paneTypeCount}    44    # 组件类型个数
+${Text_DB}        ${running_case_para['DB'][0]}
